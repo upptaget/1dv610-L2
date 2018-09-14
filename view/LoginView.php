@@ -1,4 +1,5 @@
 <?php
+require_once('controller/Variables.php');
 
 class LoginView {
 	private static $login = 'LoginView::Login';
@@ -21,7 +22,7 @@ class LoginView {
 	 */
 	public function response() {
 		$message = '';
-
+		$this->getRequestUserName();
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
@@ -70,7 +71,9 @@ class LoginView {
 
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
+		$vars = new Variables;
+		$postedUserName = $_POST[self::$name];
+		 $vars->getName($postedUserName);
 	}
 
 }
