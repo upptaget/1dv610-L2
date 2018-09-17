@@ -7,6 +7,7 @@ class  LoginController {
 
   public function userLogin($username, $password) {
     $ul = new UserLogIn();
-    $ul->userLogsIn($username, $password);
+    $logInAttempt = $ul->userLogsIn($username, $password);
+    
   }
 }

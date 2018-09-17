@@ -26,7 +26,7 @@ class LoginView {
 		try {
 		if(!empty($_POST)) {
 			$lc = new LoginController();
-			$lc->userLogin($this->getRequestUserName(), $this->getRequestPassword());
+			$tryLogin = $lc->userLogin($this->getRequestUserName(), $this->getRequestPassword());
 			$message = 'Success!';
 		}
 	}

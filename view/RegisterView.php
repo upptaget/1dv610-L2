@@ -1,19 +1,34 @@
 <?php
+
+require_once('controller/RegisterController.php');
+
 class RegisterView {
 
   private static $name = 'RegisterView::UserName';
   private static $password = 'RegisterView::Password';
   private static $confpassword = 'RegisterView::ConfPassword';
   private static $messageId = 'RegisterView::Message';
-  private static $register = 'LoginView::Register';
+  private static $register = 'RegisterView::Register';
 
   public function response() {
     $message = '';
+    try {
+      if(!empty($_POST)) {
+        $rc = new RegisterController();
+        $tryRegister = $rc->userRegister($this->getRegisterUserName(), $this->getRegisterPassword(), ''); 
+        $message = 'Success!';
+      }
+    }
 
-    if(isset($_GET["register"])) {
+    catch(Exception $e) {
+      $response = $this->generateRegisterFormHTML($e->getMessage());
+      return $response;
+    }
+
+
 			$response = $this->generateRegisterFormHTML($message);
 		  return $response;
-		}
+
 
 	}
 
@@ -38,4 +53,16 @@ private function generateRegisterFormHTML($message) {
 			</form>
 		';
   }
+  private function getRegisterUserName() {
+		if (empty($_POST[self::$name])) {
+			throw new Exception('Missing Username');
+		}
+		return $_POST[self::$name];
+}
+	private function getRegisterPassword() {
+		if (empty($_POST[self::$password])) {
+			throw new Exception('Missing Password');
+		}
+		return $_POST[self::$password];
+	}
 }
