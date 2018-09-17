@@ -1,8 +1,12 @@
 <?php
 
 require_once('view/LoginView.php');
+require_once('model/UserLogIn.php');
 
 class  LoginController {
-  private $name;
-  private $password;
+
+  public function userLogin($username, $password) {
+    $ul = new UserLogIn();
+    $ul->userLogsIn($username, $password);
+  }
 }

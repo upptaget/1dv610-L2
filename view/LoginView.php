@@ -21,13 +21,12 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-
 		$message = '';
 
 		try {
 		if(!empty($_POST)) {
-			$this->getRequestUserName();
-			$this->getRequestPassword();
+			$lc = new LoginController();
+			$lc->userLogin($this->getRequestUserName(), $this->getRequestPassword());
 			$message = 'Success!';
 		}
 	}
