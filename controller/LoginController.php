@@ -2,11 +2,7 @@
 
 require_once('view/LoginView.php');
 
-class  Variables {
+class  LoginController {
   private $name;
   private $password;
-
-  public function getName($username) {
-    echo $username;
-  }
 }

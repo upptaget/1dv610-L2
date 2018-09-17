@@ -1,5 +1,5 @@
 <?php
-require_once('controller/Variables.php');
+require_once('controller/LoginController.php');
 
 class LoginView {
 	private static $login = 'LoginView::Login';
@@ -21,17 +21,26 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
+
 		$message = '';
 
-		if(!empty($_POST[self::$name])) {
-			$vars = new Variables();
-			$vars->getName($this->getRequestUserName());
+		try {
+		if(!empty($_POST)) {
+			$this->getRequestUserName();
+			$this->getRequestPassword();
+			$message = 'Success!';
 		}
+	}
 
-		$response = $this->generateLoginFormHTML($message);
-		//$response .= $this->generateLogoutButtonHTML($message);
+	catch(Exception $e) {
+		$response = $this->generateLoginFormHTML($e->getMessage());
 		return $response;
 	}
+
+	$response = $this->generateLoginFormHTML($message);
+		//$response .= $this->generateLogoutButtonHTML($message);
+		return $response;
+}
 
 	/**
 	* Generate HTML code on the output buffer for the logout button
@@ -76,7 +85,15 @@ class LoginView {
 
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
+		if (empty($_POST[self::$name])) {
+			throw new Exception('Missing Username');
+		}
 		return $_POST[self::$name];
+}
+	private function getRequestPassword() {
+		if (empty($_POST[self::$password])) {
+			throw new Exception('Missing Password');
+		}
+		return $_POST[self::$password];
 	}
-
 }
