@@ -8,10 +8,13 @@ class RegisterView {
   private static $register = 'LoginView::Register';
 
   public function response() {
-		$message = '';
+    $message = '';
 
-		$response = $this->generateRegisterFormHTML($message);
-		return $response;
+    if(isset($_GET["register"])) {
+			$response = $this->generateRegisterFormHTML($message);
+		  return $response;
+		}
+
 	}
 
 private function generateRegisterFormHTML($message) {

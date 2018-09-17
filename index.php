@@ -16,4 +16,9 @@ $dtv = new DateTimeView();
 $rv = new RegisterView();
 $lv = new LayoutView();
 
-$lv->render(false, $v, $dtv, $rv);
+if(isset($_GET["register"])) {
+  $lv->render(false, true,  $v, $dtv, $rv);
+}
+else {
+  $lv->render(false, false,  $v, $dtv, $rv);
+}

@@ -27,7 +27,7 @@ class LoginView {
 			$vars = new Variables();
 			$vars->getName($this->getRequestUserName());
 		}
-		
+
 		$response = $this->generateLoginFormHTML($message);
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
