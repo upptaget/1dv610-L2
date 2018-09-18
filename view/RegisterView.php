@@ -15,8 +15,12 @@ class RegisterView {
     try {
       if(!empty($_POST)) {
         $rc = new RegisterController();
-        $tryRegister = $rc->userRegister($this->getRegisterUserName(), $this->getRegisterPassword(), ''); 
-        $message = 'Success!';
+        $tryRegister = $rc->userRegister($this->getRegisterUserName(), $this->getRegisterPassword(), '');
+				if($tryRegister) {
+				$message = 'Success!';
+				} else {
+					$message = 'Username already exists';
+				}
       }
     }
 

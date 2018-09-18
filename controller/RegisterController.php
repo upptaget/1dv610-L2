@@ -8,6 +8,7 @@ class  RegisterController {
   public function userRegister($username, $password, $confpassword) {
     $ur = new UserRegister();
     $registerAttempt = $ur->registerUser($username, $password, $confpassword);
+    return $registerAttempt;
 
   }
 }
