@@ -27,7 +27,14 @@ class LoginView {
 		if(!empty($_POST)) {
 			$lc = new LoginController();
 			$tryLogin = $lc->userLogin($this->getRequestUserName(), $this->getRequestPassword());
-			$message = 'Success!';
+
+			if($tryLogin) {
+				$message = 'Welcome!';
+				$response = $this->generateLogoutButtonHTML($message);
+				return $response;
+			} else {
+				$message = 'Not logged in';
+			}
 		}
 	}
 
@@ -37,7 +44,6 @@ class LoginView {
 	}
 
 	$response = $this->generateLoginFormHTML($message);
-		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 }
 

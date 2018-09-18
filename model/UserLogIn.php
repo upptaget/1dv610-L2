@@ -11,12 +11,11 @@ class UserLogIn {
 		$selection->bindParam(':name', $username);
 		$selection->execute();
 		$match = $selection->fetch(PDO::FETCH_ASSOC);
-		var_dump($match);
 
 		if(count($match) > 0 && password_verify($password, $match['password'])) {
-			echo 'Logged in';
+			return true;
 		} else {
-			echo 'Not logged in';
+			return false;
 		}
   }
 }
