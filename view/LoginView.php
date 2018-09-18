@@ -33,7 +33,7 @@ class LoginView {
 				$response = $this->generateLogoutButtonHTML($message);
 				return $response;
 			} else {
-				$message = 'Not logged in';
+				$message = 'Wrong name or password';
 			}
 		}
 	}
@@ -91,13 +91,13 @@ class LoginView {
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
 	private function getRequestUserName() {
 		if (empty($_POST[self::$name])) {
-			throw new Exception('Missing Username');
+			throw new Exception('Username is missing');
 		}
 		return $_POST[self::$name];
 }
 	private function getRequestPassword() {
 		if (empty($_POST[self::$password])) {
-			throw new Exception('Missing Password');
+			throw new Exception('Password is missing');
 		}
 		return $_POST[self::$password];
 	}
