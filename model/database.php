@@ -9,6 +9,7 @@
       $pass = "test";
       $database = "auth";
 
+
       try {
 			 return $connection = new PDO("mysql:host=$server;dbname=$database;", $user, $pass);
 		  }

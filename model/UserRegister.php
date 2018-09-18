@@ -15,11 +15,11 @@ class UserRegister {
 
     if(!$match) {
     $sql = "INSERT INTO users (name, password) VALUES (:name, :password)";
-    $stmt = $connect->prepare($sql);
-    $stmt->bindParam(':name', $username);
-    $stmt->bindParam(':password', $hashedPassword);
+    $addUser = $connection->prepare($sql);
+    $addUser->bindParam(':name', $username);
+    $addUser->bindParam(':password', $hashedPassword);
     try {
-    $stmt->execute();
+    $addUser->execute();
     return true;
     }
     catch(PDOException $e) {

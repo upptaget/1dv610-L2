@@ -10,19 +10,21 @@ require_once('view/RegisterView.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
+session_start();
+
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
 $dtv = new DateTimeView();
 $rv = new RegisterView();
 $lv = new LayoutView();
+$register = false;
+$isLoggedIn = false;
+
 
 if(isset($_GET["register"])) {
-  $lv->render(false, true,  $v, $dtv, $rv);
+  $register = true;
 }
-else if(isset($_SESSION['user_id'])) {
-  $lv->render(true, false,  $v, $dtv, $rv);
-  var_dump($_SESSION['user_id']);
+if(isset($_SESSION["user_id"])) {
+  $isLoggedIn = true;
 }
-else {
-  $lv->render(false, false,  $v, $dtv, $rv);
-}
+  $lv->render($isLoggedIn, $register,  $v, $dtv, $rv);

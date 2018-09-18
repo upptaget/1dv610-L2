@@ -6,7 +6,7 @@ class RegisterView {
 
   private static $name = 'RegisterView::UserName';
   private static $password = 'RegisterView::Password';
-  private static $confpassword = 'RegisterView::ConfPassword';
+  private static $passwordRepeat = 'RegisterView::PasswordRepeat';
   private static $messageId = 'RegisterView::Message';
   private static $register = 'RegisterView::Register';
 
@@ -49,8 +49,8 @@ private function generateRegisterFormHTML($message) {
 					<label for="' . self::$password . '">Password :</label>
           <input type="password" id="' . self::$password . '" name="' . self::$password . '" />
 
-          <label for="' . self::$confpassword . '">Confirm Password :</label>
-					<input type="password" id="' . self::$confpassword . '" name="' . self::$confpassword . '" />
+          <label for="' . self::$passwordRepeat . '">Confirm Password :</label>
+					<input type="password" id="' . self::$passwordRepeat . '" name="' . self::$passwordRepeat . '" />
 
 					<input type="submit" name="' . self::$register . '" value="register" />
 				</fieldset>
@@ -60,12 +60,18 @@ private function generateRegisterFormHTML($message) {
   private function getRegisterUserName() {
 		if (empty($_POST[self::$name])) {
 			throw new Exception('Missing Username');
+		} else if (strlen($_POST[self::$name]) < 2) {
+			throw new Exception('Username must be at least 2 characters');
 		}
 		return $_POST[self::$name];
 }
 	private function getRegisterPassword() {
 		if (empty($_POST[self::$password])) {
 			throw new Exception('Missing Password');
+		} else if ($_POST[self::$password] != $_POST[self::$passwordRepeat]) {
+			throw new Exception('Passwords does not match');
+		} else if (strlen($_POST[self::$password]) < 3) {
+			throw new Exception('Password must be at least 3 characters');
 		}
 		return $_POST[self::$password];
 	}
