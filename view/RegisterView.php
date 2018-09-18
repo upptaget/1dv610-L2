@@ -15,11 +15,11 @@ class RegisterView {
     try {
       if(!empty($_POST)) {
         $rc = new RegisterController();
-        $tryRegister = $rc->userRegister($this->getRegisterUserName(), $this->getRegisterPassword(), '');
+        $tryRegister = $rc->userRegister($this->getRegisterPassword(), $this->getRegisterUserName());
 				if($tryRegister) {
 				$message = 'Success!';
 				} else {
-					$message = 'Username already exists';
+					$message = 'User exists, pick another username.';
 				}
       }
     }
@@ -58,20 +58,16 @@ private function generateRegisterFormHTML($message) {
 		';
   }
   private function getRegisterUserName() {
-		if (empty($_POST[self::$name])) {
-			throw new Exception('Missing Username');
-		} else if (strlen($_POST[self::$name]) < 2) {
-			throw new Exception('Username must be at least 2 characters');
+		if(empty($_POST[self::$name]) || strlen($_POST[self::$name]) < 2) {
+			throw new Exception('Username has too few characters, at least 3 characters.');
 		}
 		return $_POST[self::$name];
 }
 	private function getRegisterPassword() {
-		if (empty($_POST[self::$password])) {
-			throw new Exception('Missing Password');
+		if (empty($_POST[self::$password]) || strlen($_POST[self::$password]) < 6) {
+			throw new Exception('Password has too few characters, at least 6 characters.');
 		} else if ($_POST[self::$password] != $_POST[self::$passwordRepeat]) {
-			throw new Exception('Passwords does not match');
-		} else if (strlen($_POST[self::$password]) < 3) {
-			throw new Exception('Password must be at least 3 characters');
+			throw new Exception('Passwords do not match.');
 		}
 		return $_POST[self::$password];
 	}

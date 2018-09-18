@@ -27,9 +27,9 @@ class LayoutView {
 
   private function renderLink($register) {
     if(!$register) {
-    return '<a href="?register">Register</a>';
+    return '<a href="?register">Register new user</a>';
     }
-    return '<a href="?">Login</a>';
+    return '<a href="?">Back to login</a>';
   }
 
   private function renderLoginOrRegister($register, LoginView $lv, RegisterView $rv) {

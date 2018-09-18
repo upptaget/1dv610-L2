@@ -27,4 +27,9 @@ if(isset($_GET["register"])) {
 if(isset($_SESSION["user_id"])) {
   $isLoggedIn = true;
 }
+if(isset($_POST["logout"])) {
+  session_unset();
+  session_destroy();
+  $isLoggedIn = false;
+}
   $lv->render($isLoggedIn, $register,  $v, $dtv, $rv);

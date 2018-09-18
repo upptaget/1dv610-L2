@@ -3,7 +3,7 @@ require_once('database.php');
 
 class UserRegister {
 
-  public function registerUser($username, $password, $confpassword) {
+  public function registerUser($username, $password) {
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $db = new Database();
     $connection = $db->connectToDatabase();
