@@ -40,7 +40,8 @@ private function generateRegisterFormHTML($message) {
 
 	private function displayUsername() {
 		if(isset($_POST[self::$name])) {
-			return preg_replace('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $_POST[self::$name]);
+			$checkedForTags = preg_replace('/(\<.*?\>)/', '', $_POST[self::$name]);
+			return preg_replace('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $checkedForTags);
 		} else {
 			return '';
 		}
