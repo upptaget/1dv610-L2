@@ -5,14 +5,23 @@ require_once('model/UserLogIn.php');
 
 class  LoginController {
 
+  private $isLoggedIn;
+
   public function userLogin($username, $password) {
     try {
-    $ul = new UserLogIn();
-    $logInAttempt = $ul->userLogsIn($username, $password);
+
+      $ul = new UserLogIn();
+      $logInAttempt = $ul->userLogsIn($username, $password);
+      $this->isLoggedIn = true;
+      return $this->isLoggedIn;
+
+
     } catch(PDOException $e) {
       echo $e->getMessage();
-     return $logInAttempt;
     }
-    return $logInAttempt;
+  }
+
+  public function checkLogIn() {
+    return $this->isLoggedIn;
   }
 }

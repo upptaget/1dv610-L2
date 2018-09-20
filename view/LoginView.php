@@ -29,9 +29,12 @@ class LoginView {
 			$tryLogin = $lc->userLogin($this->getRequestUserName(), $this->getRequestPassword());
 
 			if($tryLogin) {
+
 				$message = 'Welcome';
 				$response = $this->generateLogoutButtonHTML($message);
+
 				return $response;
+
 			} else {
 				$message = 'Wrong name or password';
 			}

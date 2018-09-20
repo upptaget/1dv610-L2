@@ -1,8 +1,6 @@
 <?php
 
 require_once('database.php');
-// session_start();
-
 class UserLogIn {
 
   public function userLogsIn($username, $password) {
@@ -14,9 +12,12 @@ class UserLogIn {
 		$match = $selection->fetch(PDO::FETCH_ASSOC);
 
 		if($match && password_verify($password, $match['password'])) {
+
 			$_SESSION['user_id'] = $match['id'];
 			return true;
+
 		} else {
+
 			return false;
 		}
   }

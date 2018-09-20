@@ -3,7 +3,7 @@
 
 class LayoutView {
 
-  public function render($isLoggedIn, $register, LoginView $lv, DateTimeView $dtv, RegisterView $rv) {
+  public function render($isLoggedIn, $register, $isRegistered, LoginView $lv, DateTimeView $dtv, RegisterView $rv) {
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -28,9 +28,11 @@ class LayoutView {
   private function renderLink($register) {
     if(!$register) {
     return '<a href="?register">Register new user</a>';
-    }
+  }
+   else {
     return '<a href="?">Back to login</a>';
   }
+}
 
   private function renderLoginOrRegister($register, LoginView $lv, RegisterView $rv) {
     if ($register) {

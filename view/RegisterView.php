@@ -1,39 +1,19 @@
 <?php
 
-require_once('controller/RegisterController.php');
-
 class RegisterView {
 
   private static $name = 'RegisterView::UserName';
   private static $password = 'RegisterView::Password';
   private static $passwordRepeat = 'RegisterView::PasswordRepeat';
   private static $messageId = 'RegisterView::Message';
-  private static $register = 'RegisterView::Register';
+	private static $register = 'RegisterView::Register';
+	private $message = '';
 
   public function response() {
-    $message = '';
-    try {
-      if(!empty($_POST)) {
-        $rc = new RegisterController();
-        $tryRegister = $rc->userRegister($this->getRegisterPassword(), $this->getRegisterUserName());
-				if($tryRegister) {
-				$message = 'Success!';
-				} else {
-					$message = 'User exists, pick another username.';
-				}
-      }
-    }
 
-    catch(Exception $e) {
-      $response = $this->generateRegisterFormHTML($e->getMessage());
-      return $response;
-    }
+		$response = $this->generateRegisterFormHTML($this->message);
 
-
-			$response = $this->generateRegisterFormHTML($message);
-		  return $response;
-
-
+		return $response;
 	}
 
 private function generateRegisterFormHTML($message) {
@@ -57,18 +37,26 @@ private function generateRegisterFormHTML($message) {
 			</form>
 		';
   }
-  private function getRegisterUserName() {
-		if(empty($_POST[self::$name]) || strlen($_POST[self::$name]) < 2) {
+  public function getRegisterUserName() {
+		if(empty($_POST[self::$name]) || strlen($_POST[self::$name]) < 3) {
 			throw new Exception('Username has too few characters, at least 3 characters.');
 		}
 		return $_POST[self::$name];
 }
-	private function getRegisterPassword() {
+	public function getRegisterPassword() {
 		if (empty($_POST[self::$password]) || strlen($_POST[self::$password]) < 6) {
 			throw new Exception('Password has too few characters, at least 6 characters.');
-		} else if ($_POST[self::$password] != $_POST[self::$passwordRepeat]) {
-			throw new Exception('Passwords do not match.');
 		}
 		return $_POST[self::$password];
+	}
+
+	public function checkRegistrationPasswordsMatch() {
+		if ($_POST[self::$password] != $_POST[self::$passwordRepeat]) {
+			throw new Exception('Passwords do not match.');
+		}
+	}
+
+	public function setMessage($message) {
+		$this->message .= $message . '<br>';
 	}
 }

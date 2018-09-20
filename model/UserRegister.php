@@ -20,13 +20,12 @@ class UserRegister {
     $addUser->bindParam(':password', $hashedPassword);
     try {
     $addUser->execute();
-    return true;
     }
     catch(PDOException $e) {
-      return false;
+      echo $e->getMessage();
     }
     } else {
-      return false;
+      throw new Exception('Username already exists.');
     }
 
 
