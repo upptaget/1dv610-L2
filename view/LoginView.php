@@ -9,6 +9,7 @@ class LoginView {
 	private static $cookiePassword = 'LoginView::CookiePassword';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
+	private $message = '';
 
 
 
@@ -19,23 +20,17 @@ class LoginView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response($isLoggedIn) {
-		$message = '';
+	public function response($isLoggedIn, $isRegistered) {
 
 		try {
-		if(!empty($_POST)) {
-
 			if($isLoggedIn) {
 
-				$message = 'Welcome';
-				$response = $this->generateLogoutButtonHTML($message);
+				$this->message = 'Welcome';
+				$response = $this->generateLogoutButtonHTML($this->message);
 
 				return $response;
-
-			} else {
-				$message = 'Wrong name or password';
 			}
-		}
+
 	}
 
 	catch(Exception $e) {
@@ -43,7 +38,8 @@ class LoginView {
 		return $response;
 	}
 
-	$response = $this->generateLoginFormHTML($message);
+
+	$response = $this->generateLoginFormHTML($this->message);
 		return $response;
 }
 
@@ -74,7 +70,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $this->displayUsername() . '" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -100,5 +96,21 @@ class LoginView {
 			throw new Exception('Password is missing');
 		}
 		return $_POST[self::$password];
+	}
+
+	public function setMessage($message) {
+		$this->message = $message . '<br>';
+	}
+
+	public function getMessage() {
+		return $this->message;
+	}
+
+	private function displayUsername() {
+		if(isset($_POST[self::$name])) {
+			return $_POST[self::$name];
+		} else {
+			return '';
+		}
 	}
 }

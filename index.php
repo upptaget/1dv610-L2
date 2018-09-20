@@ -18,7 +18,6 @@ require_once('model/database.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-session_start();
 
 
 //CREATE OBJECTS OF THE VIEWS
@@ -42,11 +41,13 @@ if(isset($_POST["LoginView::Login"])) {
 }
 
 if(isset($_POST["LoginView::Logout"])) {
-  session_unset();
-  session_destroy();
+  //session_unset();
+  //session_destroy();
 }
 
 $isRegistered = $rc->isRegistered();
 $isLoggedIn = $lc->checkLogIn();
 
-$lv->render($isRegistered,  $v, $dtv, $rv, $lc);
+
+
+$lv->render($isRegistered, $v, $dtv, $rv, $lc, $rc);

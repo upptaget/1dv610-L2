@@ -18,14 +18,38 @@ class  LoginController {
 
   public function userLogin() {
     try {
-      $this->logInAttempt = $this->loginModel->userLogsIn($this->loginView->getRequestUserName(), $this->loginView->getRequestPassword());
+      $this->logInAttempt = $this->loginModel->userLogsIn($this->getLoginUserName(), $this->getLoginPassword());
 
       if($this->logInAttempt) {
         $this->isLoggedIn = true;
+      } else {
+        $message = $this->loginView->getMessage();
+        if($message == '') {
+        $this->loginView->setMessage('Wrong name or password');
+        }
       }
 
     } catch(PDOException $e) {
       echo $e->getMessage();
+    }
+  }
+
+  public function getLoginUsername() {
+    try {
+    return  $this->loginView->getRequestUsername();
+    } catch(Exception $e) {
+      $this->loginView->setMessage($e->getMessage());
+    }
+  }
+
+  public function getLoginPassword() {
+    try {
+    return $this->loginView->getRequestPassword();
+    } catch(Exception $e) {
+      $message = $this->loginView->getMessage();
+      if($message == '') {
+      $this->loginView->setMessage($e->getMessage());
+      }
     }
   }
 

@@ -4,8 +4,9 @@
 class LayoutView {
 
 
-  public function render($isRegistered, LoginView $lv, DateTimeView $dtv, RegisterView $rv, LoginController $lc) {
+  public function render($isRegistered, LoginView $lv, DateTimeView $dtv, RegisterView $rv, LoginController $lc, RegisterController $rc) {
     $isLoggedIn = $lc->checkLogIn();
+    $isRegistered = $rc->isRegistered();
 
     echo '<!DOCTYPE html>
       <html>
@@ -15,11 +16,11 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderLink() . '
+          ' . $this->renderLink($isRegistered) . '
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
 
           <div class="container">
-              ' .$this->renderLoginOrRegister($isLoggedIn, $lv, $rv)  . '
+              ' .$this->renderLoginOrRegister($isLoggedIn, $isRegistered, $lv, $rv)  . '
 
               ' . $dtv->show() . '
           </div>
@@ -28,20 +29,30 @@ class LayoutView {
     ';
   }
 
-  private function renderLink() {
-    if(isset($_GET["register"])) {
+  private function renderLink($isRegistered) {
+    if(isset($_GET["register"]) && !$isRegistered) {
       return '<a href="?">Back to login</a>';
     }
     return '<a href="?register">Register new user</a>';
 }
 
-  private function renderLoginOrRegister($isLoggedIn, LoginView $lv, RegisterView $rv) {
+  private function renderLoginOrRegister($isLoggedIn, $isRegistered, LoginView $lv, RegisterView $rv) {
 
-    if(isset($_GET["register"])) {
+    if($isLoggedIn) {
+      return $lv->response($isLoggedIn, $isRegistered);
+    }
+
+    if(isset($_GET["register"]) && !$isRegistered) {
       return $rv->response();
     }
-      return $lv->response($isLoggedIn);
+    if(isset($_POST["register"]) && !$isRegistered) {
+      return $rv->response();
+      }
+    if($isRegistered) {
+      return $lv->response($isLoggedIn, $isRegistered);
     }
+    return $lv->response($isLoggedIn, $isRegistered);
+  }
 
   private function renderIsLoggedIn($isLoggedIn) {
     if ($isLoggedIn) {

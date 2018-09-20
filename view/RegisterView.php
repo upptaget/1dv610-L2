@@ -24,7 +24,7 @@ private function generateRegisterFormHTML($message) {
 					<p id="' . self::$messageId . '">' . $message . '</p>
 
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->displayUsername() . '" />
 
 					<label for="' . self::$password . '">Password :</label>
           <input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -36,7 +36,16 @@ private function generateRegisterFormHTML($message) {
 				</fieldset>
 			</form>
 		';
-  }
+	}
+
+	private function displayUsername() {
+		if(isset($_POST[self::$name])) {
+			return $_POST[self::$name];
+		} else {
+			return '';
+		}
+	}
+
   public function getRegisterUserName() {
 		if(empty($_POST[self::$name]) || strlen($_POST[self::$name]) < 3) {
 			throw new Exception('Username has too few characters, at least 3 characters.');

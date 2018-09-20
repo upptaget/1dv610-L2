@@ -4,7 +4,7 @@ class  RegisterController {
 
   private $registerView;
   private $registerModel;
-  private $isRegistered;
+  private $isRegistered = false;
 
     public function __construct(RegisterView $rv, UserRegister $ur)
     {
@@ -16,8 +16,13 @@ class  RegisterController {
     try{
       $passCheck = $this->checkPasswordsMatching();
       if($passCheck) {
-      $this->registerModel->registerUser($this->getRegisterUsername(), $this->getRegisterPassword());
-      $this->isRegistered = true;
+        try {
+       $this->registerModel->registerUser($this->getRegisterUsername(), $this->getRegisterPassword());
+       $this->isRegistered = false;
+        } catch (Exception $e){
+          $this->registerView->setMessage($e->getMessage());
+        }
+
       }
 
     } catch(Exception $e) {
