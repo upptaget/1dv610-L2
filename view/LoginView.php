@@ -30,7 +30,11 @@ class LoginView {
 
 				return $response;
 			}
-
+			if(isset($_POST[self::$logout])) {
+				$this->message = 'Bye bye!';
+				$response = $this->generateLoginFormHTML($this->message);
+				return $response;
+			}
 	}
 
 	catch(Exception $e) {
@@ -91,7 +95,7 @@ class LoginView {
 		}
 		return $_POST[self::$name];
 	}
-	
+
 	public function getRequestPassword() {
 		if (empty($_POST[self::$password])) {
 			throw new Exception('Password is missing');
