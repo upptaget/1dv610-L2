@@ -31,22 +31,22 @@ $lm = new UserLogIn();
 $rc = new RegisterController($rv, $rm);
 $lc = new LoginController($v, $lm);
 
-$register = false;
-
-if(isset($_GET["register"])) {
-  $register = true;
-}
+$isLoggedIn = false;
 
 if(isset($_POST["RegisterView::Register"])) {
   $rc->userRegister();
 }
 
-if(isset($_POST["LoginView::Logout"]) && isset($_SESSION["user_id"])) {
+if(isset($_POST["LoginView::Login"])) {
+  $lc->userLogin();
+}
+
+if(isset($_POST["LoginView::Logout"])) {
   session_unset();
   session_destroy();
-  $isLoggedIn = false;
 }
+
 $isRegistered = $rc->isRegistered();
 $isLoggedIn = $lc->checkLogIn();
-var_dump($isLoggedIn);
-$lv->render($isLoggedIn, $register, $isRegistered,  $v, $dtv, $rv);
+
+$lv->render($isRegistered,  $v, $dtv, $rv, $lc);

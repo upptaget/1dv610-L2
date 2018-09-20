@@ -3,7 +3,10 @@
 
 class LayoutView {
 
-  public function render($isLoggedIn, $register, $isRegistered, LoginView $lv, DateTimeView $dtv, RegisterView $rv) {
+
+  public function render($isRegistered, LoginView $lv, DateTimeView $dtv, RegisterView $rv, LoginController $lc) {
+    $isLoggedIn = $lc->checkLogIn();
+
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -12,11 +15,11 @@ class LayoutView {
         </head>
         <body>
           <h1>Assignment 2</h1>
-          ' . $this->renderLink($register) . '
+          ' . $this->renderLink() . '
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
 
           <div class="container">
-              ' .$this->renderLoginOrRegister($register, $lv, $rv)  . '
+              ' .$this->renderLoginOrRegister($isLoggedIn, $lv, $rv)  . '
 
               ' . $dtv->show() . '
           </div>
@@ -25,24 +28,20 @@ class LayoutView {
     ';
   }
 
-  private function renderLink($register) {
-    if(!$register) {
+  private function renderLink() {
+    if(isset($_GET["register"])) {
+      return '<a href="?">Back to login</a>';
+    }
     return '<a href="?register">Register new user</a>';
-  }
-   else {
-    return '<a href="?">Back to login</a>';
-  }
 }
 
-  private function renderLoginOrRegister($register, LoginView $lv, RegisterView $rv) {
-    if ($register) {
+  private function renderLoginOrRegister($isLoggedIn, LoginView $lv, RegisterView $rv) {
+
+    if(isset($_GET["register"])) {
       return $rv->response();
     }
-    else {
-      return $lv->response();
+      return $lv->response($isLoggedIn);
     }
-  }
-
 
   private function renderIsLoggedIn($isLoggedIn) {
     if ($isLoggedIn) {

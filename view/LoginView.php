@@ -1,5 +1,4 @@
 <?php
-require_once('controller/LoginController.php');
 
 class LoginView {
 	private static $login = 'LoginView::Login';
@@ -20,15 +19,13 @@ class LoginView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response() {
+	public function response($isLoggedIn) {
 		$message = '';
 
 		try {
 		if(!empty($_POST)) {
-			$lc = new LoginController();
-			$tryLogin = $lc->userLogin($this->getRequestUserName(), $this->getRequestPassword());
 
-			if($tryLogin) {
+			if($isLoggedIn) {
 
 				$message = 'Welcome';
 				$response = $this->generateLogoutButtonHTML($message);
@@ -92,13 +89,13 @@ class LoginView {
 	}
 
 	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
+	public function getRequestUserName() {
 		if (empty($_POST[self::$name])) {
 			throw new Exception('Username is missing');
 		}
 		return $_POST[self::$name];
 }
-	private function getRequestPassword() {
+	public function getRequestPassword() {
 		if (empty($_POST[self::$password])) {
 			throw new Exception('Password is missing');
 		}
