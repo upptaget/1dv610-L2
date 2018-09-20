@@ -2,7 +2,6 @@
     class Database {
 
     public function connectToDatabase () {
-
       $server = "localhost";
       $user = "test";
       $pass = "test";

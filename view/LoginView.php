@@ -90,7 +90,8 @@ class LoginView {
 			throw new Exception('Username is missing');
 		}
 		return $_POST[self::$name];
-}
+	}
+	
 	public function getRequestPassword() {
 		if (empty($_POST[self::$password])) {
 			throw new Exception('Password is missing');

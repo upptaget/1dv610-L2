@@ -33,7 +33,7 @@ class LayoutView {
     if(isset($_GET["register"]) && !$isRegistered) {
       return '<a href="?">Back to login</a>';
     }
-    return '<a href="?register">Register new user</a>';
+    return '<a href="?register">Register a new user</a>';
 }
 
   private function renderLoginOrRegister($isLoggedIn, $isRegistered, LoginView $lv, RegisterView $rv) {

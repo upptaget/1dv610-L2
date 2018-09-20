@@ -40,7 +40,7 @@ private function generateRegisterFormHTML($message) {
 
 	private function displayUsername() {
 		if(isset($_POST[self::$name])) {
-			return $_POST[self::$name];
+			return preg_replace('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', '', $_POST[self::$name]);
 		} else {
 			return '';
 		}
@@ -49,6 +49,9 @@ private function generateRegisterFormHTML($message) {
   public function getRegisterUserName() {
 		if(empty($_POST[self::$name]) || strlen($_POST[self::$name]) < 3) {
 			throw new Exception('Username has too few characters, at least 3 characters.');
+		}
+		if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $_POST[self::$name])) {
+			throw new Exception('Username contains invalid characters.');
 		}
 		return $_POST[self::$name];
 }
