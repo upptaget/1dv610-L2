@@ -4,7 +4,7 @@
 class LayoutView {
 
 
-  public function render($isRegistered, LoginView $lv, DateTimeView $dtv, RegisterView $rv, LoginController $lc, RegisterController $rc) {
+  public function render(LoginView $lv, DateTimeView $dtv, RegisterView $rv, LoginController $lc, RegisterController $rc) {
     $isLoggedIn = $lc->checkLogIn();
     $isRegistered = $rc->isRegistered();
 

@@ -18,7 +18,7 @@ require_once('model/database.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-
+session_start();
 
 //CREATE OBJECTS OF THE VIEWS
 $v = new LoginView();
@@ -30,8 +30,6 @@ $lm = new UserLogIn();
 $rc = new RegisterController($rv, $rm);
 $lc = new LoginController($v, $lm);
 
-$isLoggedIn = false;
-
 if(isset($_POST["RegisterView::Register"])) {
   $rc->userRegister();
 }
@@ -41,13 +39,12 @@ if(isset($_POST["LoginView::Login"])) {
 }
 
 if(isset($_POST["LoginView::Logout"])) {
-  //session_unset();
-  //session_destroy();
+    if(isset($_SESSION["logged_in"])) {
+      $v ->setMessage('Bye bye!');
+      session_unset();
+      session_destroy();
+      }
+
 }
 
-$isRegistered = $rc->isRegistered();
-$isLoggedIn = $lc->checkLogIn();
-
-
-
-$lv->render($isRegistered, $v, $dtv, $rv, $lc, $rc);
+$lv->render($v, $dtv, $rv, $lc, $rc);

@@ -30,11 +30,6 @@ class LoginView {
 
 				return $response;
 			}
-			if(isset($_POST[self::$logout])) {
-				$this->message = 'Bye bye!';
-				$response = $this->generateLoginFormHTML($this->message);
-				return $response;
-			}
 	}
 
 	catch(Exception $e) {

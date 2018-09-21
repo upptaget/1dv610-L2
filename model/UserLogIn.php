@@ -14,7 +14,7 @@ class UserLogIn {
 		if($match && password_verify($password, $match['password'])) {
 
 			$_SESSION['user_id'] = $match['id'];
-			$_SESSION['logged_in'] = true;
+			$_SESSION['logged_in'] = $match['name'];
 			return true;
 
 		} else {
