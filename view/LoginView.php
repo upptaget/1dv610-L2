@@ -20,7 +20,7 @@ class LoginView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response($isLoggedIn, $isRegistered) {
+	public function response($isLoggedIn) {
 
 		try {
 			if($isLoggedIn) {
